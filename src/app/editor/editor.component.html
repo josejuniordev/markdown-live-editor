@@ -1,0 +1,19 @@
+<form [formGroup]="formEditor" (ngSubmit)="onSubmitForm()">
+  <div class="form-group">
+    <label for="markdownContent">Digite um texto markdown abaixo:</label>
+    <textarea
+      formControlName="markdownContent"
+      name="markdownContent"
+      id="markdownContent"
+      rows="10"
+      class="form-control"
+      ></textarea>
+  </div>
+  <div class="form-group">
+    <input
+      type="submit"
+      class="btn btn-primary"
+      value="Salvar"
+      [disabled]="formEditor.get('markdownContent').invalid">
+  </div>
+</form>

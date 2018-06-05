@@ -3,16 +3,23 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { EditorComponent } from './editor/editor.component';
+import { ViewerComponent } from './viewer/viewer.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {EditorService} from './editor.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EditorComponent,
+    ViewerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [EditorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
