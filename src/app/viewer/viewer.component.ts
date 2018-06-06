@@ -29,7 +29,9 @@ export class ViewerComponent implements OnInit, OnChanges {
   }
 
   convertToHTML() {
-    this.htmlContent = this.replaceTitles(this.markdownContent) || '';
+    this.htmlContent = this.replaceParagraphs(this.markdownContent) || '';
+    this.htmlContent = this.replaceLinks(this.htmlContent) || '';
+    this.htmlContent = this.replaceTitles(this.htmlContent) || '';
     return this.htmlContent;
   }
 
@@ -43,22 +45,32 @@ export class ViewerComponent implements OnInit, OnChanges {
   }
 
   replaceTitleH1(md: string) {
-    const titleRegExp = /#([\w*\-+?!çáéíóúñõãÇÁÉÍÓÚÑÕÃ ]*)/;
+    const titleRegExp = /#(.*)/;
     const regex = new RegExp(titleRegExp, 'g');
     return md.replace(regex, '<h1>$1</h1>');
   }
 
   replaceTitleH2(md: string) {
-    const titleRegExp = /##([\w*\-+?!çáéíóúñõãÇÁÉÍÓÚÑÕÃ ]*)/;
+    const titleRegExp = /##(.*)/;
     const regex = new RegExp(titleRegExp, 'g');
-
     return md.replace(regex, '<h2>$1</h2>');
   }
 
   replaceTitleH3(md: string) {
-    const titleRegExp = /###([\w*\-+?!çáéíóúñõãÇÁÉÍÓÚÑÕÃ ]*)/;
+    const titleRegExp = /###(.*)/;
     const regex = new RegExp(titleRegExp, 'g');
-
     return md.replace(regex, '<h3>$1</h3>');
+  }
+
+  replaceParagraphs(md: string) {
+    const paragraphRegExp = /^([^#].*)/;
+    const regex = new RegExp(paragraphRegExp, 'gm');
+    return md.replace(regex, '<p>$1</p>');
+  }
+
+  replaceLinks(md: string) {
+    const paragraphRegExp = /\[(.*)\]\(((http|https):\/\/.*)\)/;
+    const regex = new RegExp(paragraphRegExp, 'gm');
+    return md.replace(regex, '<a href="$2">$1</a>');
   }
 }
